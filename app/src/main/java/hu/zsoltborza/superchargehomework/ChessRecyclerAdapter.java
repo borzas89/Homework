@@ -45,16 +45,17 @@ public class ChessRecyclerAdapter extends RecyclerView.Adapter<ChessRecyclerAdap
     }
 
     @Override
-    public void onBindViewHolder(ChessViewHolder holder, final int position) {
+    public void onBindViewHolder(final ChessViewHolder holder, final int position) {
 
         String queenItem = mQueensList.get(position);
 
         holder.tvData.setText(queenItem);
-        holder.tvData.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mQueensList.get(position);
-             //   Toast.makeText(mContext, mQueensList.get(position)+ " clicked", Toast.LENGTH_SHORT).show();
+
+               Toast.makeText(mContext, holder.getAdapterPosition() + " clicked", Toast.LENGTH_SHORT).show();
             }
         });
 

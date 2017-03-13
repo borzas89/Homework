@@ -6,25 +6,22 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
     RecyclerView recyclerView;
     ChessRecyclerAdapter mAdapter;
     List<String> mQueensList = new ArrayList<>();
 
     int boardSize = 8;
-
-    int columnCount = 8 ;
-    int rowCount = 8;
-
-    boolean empty = false;
-    boolean queen = false;
-
 
 
     @Override
@@ -33,11 +30,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = (RecyclerView) findViewById(R.id.chess_recycler_view);
+        GridLayout mGridChess = (GridLayout) findViewById(R.id.gridlayut_chess);
+
+        int columnCount = mGridChess.getColumnCount() ;
+        int rowCount = mGridChess.getRowCount();
 
         setupRecyclerView();
 
+        // attaching to gridview
+        int c;
+        for (int r = 0; r < rowCount; r++) {
+
+            for ( c = 0; c < columnCount; c++) {
+
+                //
+                ChessView queens = new ChessView(this, r, c,R.drawable.crown);
+                queens.setId(View.generateViewId());
+                mGridChess.addView(queens);
+            }
+
+       }
 
     }
+
+
 
 
 
@@ -51,16 +67,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-        Queens.enumerate(8);
-        mQueensList = Queens.placedQueens;
-
+        mQueensList = Queens.getQueensList(boardSize);
 
         mAdapter = new ChessRecyclerAdapter(MainActivity.this,mQueensList);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-
-
+        
 
 
 

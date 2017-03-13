@@ -11,8 +11,20 @@ import java.util.List;
 public class Queens {
 
 
-  public static  String str = null;
-    public static List<String> placedQueens = new ArrayList<>();
+
+    public static List<String> queensList = new ArrayList<>();
+
+
+    public static List<String> getQueensList(int boardSze) {
+        enumerate(boardSze);
+        return queensList;
+    }
+
+    public static void setQueensList(List<String> queensList) {
+        Queens.queensList = queensList;
+    }
+
+
     /***************************************************************************
      * Return true if queen placement q[n] does not conflict with
      * other queens q[0] through q[n-1]
@@ -32,46 +44,37 @@ public class Queens {
      ***************************************************************************/
     public static void printQueens(int[] q) {
 
+        String[] characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
 
-        String[] characters = new String [8];
-        characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
         int n = q.length;
+        String item=null;
+
+        String actual = " ";
+
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (q[i] == j){
-                   // System.out.print(characters[j] + n + " ");
-                    placedQueens.add(i, characters[j] + n);
+
+                    item = characters[j] + n + " ";
+                    actual = actual + item;
+                    //  System.out.print(item);
+
+
                 }
-              //  else           System.out.print(" ");
-            }
-           // System.out.println();
-        }
-       // System.out.println();
-    }
 
-
-
-    public List<String> printedQueens(int[] q) {
-
-        List<String> placedQueens = new ArrayList<>();
-        String[] characters = new String [8];
-        characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
-        int n = q.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (q[i] == j){
-                    //System.out.print(characters[j] + n + " ");
-                    placedQueens.add(i,characters[j]+n);
-                }
+                //characters System.out.print(characters[j] + n + " ");
+                // getQueens(characters[j] + n);
                 //  else           System.out.print(" ");
             }
             // System.out.println();
         }
-        //System.out.println();
 
-        return placedQueens;
+        // String v = item+item;
+       // System.out.println(actual);
+        queensList.add(actual);
+
     }
-
 
     /***************************************************************************
      *  Try all permutations using backtracking
@@ -92,23 +95,9 @@ public class Queens {
         }
     }
 
-    public static List<String> getQueens(){
-
-        List<String> queensList = new ArrayList<>();
-
-        for (int i=0;i<92;i++){
-            queensList.add(i,str);
-        }
-
-
-        return queensList;
-
-    }
-
-
-   /* public static void main(String[] args) {
-      //  int n = Integer.parseInt(8);
-        enumerate(8);
-    }*/
+  // public static void main(String[] args) {
+       // int n = Integer.parseInt(8);
+    //    enumerate(8);
+   // }
 
 }
