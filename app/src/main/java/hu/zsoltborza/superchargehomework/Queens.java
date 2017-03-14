@@ -43,38 +43,28 @@ public class Queens {
      * Prints n-by-n placement of queens from permutation q in ASCII.
      ***************************************************************************/
     public static void printQueens(int[] q) {
+        String[] characters = new String [8];
+        characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
 
-        String[] characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
+        String item,actual = "";
 
         int n = q.length;
-        String item=null;
-
-        String actual = " ";
-
-
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (q[i] == j){
-
-                    item = characters[j] + n + " ";
+                    
+                    item = characters[j] + ++j + " ";
                     actual = actual + item;
-                    //  System.out.print(item);
-
-
                 }
 
-                //characters System.out.print(characters[j] + n + " ");
-                // getQueens(characters[j] + n);
-                //  else           System.out.print(" ");
             }
-            // System.out.println();
+
         }
 
-        // String v = item+item;
-       // System.out.println(actual);
         queensList.add(actual);
-
     }
+
+
 
     /***************************************************************************
      *  Try all permutations using backtracking
