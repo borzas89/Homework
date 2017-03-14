@@ -37,16 +37,22 @@ public class MainActivity extends AppCompatActivity {
 
         setupRecyclerView();
 
-        // attaching to gridview
+        // attaching to gridview - drawing a chessboard
         int c;
         for (int r = 0; r < rowCount; r++) {
 
             for ( c = 0; c < columnCount; c++) {
 
-                //
-                ChessView queens = new ChessView(this, r, c,R.drawable.crown);
-                queens.setId(View.generateViewId());
-                mGridChess.addView(queens);
+                if((r+c)%2==0){
+                    ChessView blackSquares = new ChessView(this, r, c,R.drawable.black);
+                    blackSquares.setId(View.generateViewId());
+                    mGridChess.addView(blackSquares);
+                }else{
+                    ChessView whiteSquares = new ChessView(this, r, c,R.drawable.white);
+                    whiteSquares.setId(View.generateViewId());
+                    mGridChess.addView(whiteSquares);
+                }
+
             }
 
        }
