@@ -27,10 +27,13 @@ public class ChessRecyclerAdapter extends RecyclerView.Adapter<ChessRecyclerAdap
     private LayoutInflater inflater;
     private final TypedValue mTypedValue = new TypedValue();
 
-    public ChessRecyclerAdapter(Context context, List<String> queensList){
+    private static RecyclerViewClickListener mItemListener;
+
+    public ChessRecyclerAdapter(Context context, RecyclerViewClickListener itemListener,List<String> queensList){
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         inflater = LayoutInflater.from(context);
         mContext = context;
+        mItemListener = itemListener;
         mQueensList = queensList;
 
     }
@@ -50,14 +53,14 @@ public class ChessRecyclerAdapter extends RecyclerView.Adapter<ChessRecyclerAdap
         String queenItem = mQueensList.get(position);
 
         holder.tvData.setText(queenItem);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+      /*  holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mQueensList.get(position);
 
                Toast.makeText(mContext, holder.getAdapterPosition() + " clicked", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
     }
 
@@ -70,19 +73,32 @@ public class ChessRecyclerAdapter extends RecyclerView.Adapter<ChessRecyclerAdap
 
 
 
-
-    public class ChessViewHolder extends RecyclerView.ViewHolder {
+    //ViewHolder class implement OnClickListener,
+    //set clicklistener to itemView and,
+    //send message back to Activity/Fragment
+    public class ChessViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView tvData;
 
         public ChessViewHolder(View itemView) {
             super(itemView);
-           tvData = (TextView) itemView.findViewById(R.id.tvData);
+            tvData = (TextView) itemView.findViewById(R.id.tvData);
+            itemView.setOnClickListener(this);
 
 
         }
 
 
+        @Override
+        public void onClick(View v) {
+            mItemListener.recyclerViewListClicked(v,this.getAdapterPosition());
+        }
+    }
+
+    public interface RecyclerViewClickListener
+    {
+
+        public void recyclerViewListClicked(View view, int position);
     }
 
 

@@ -10,13 +10,13 @@ import java.util.List;
 // From http://introcs.cs.princeton.edu/java/23recursion/Queens.java.html
 public class Queens {
 
-
-
     public static List<String> queensList = new ArrayList<>();
+    public static  String[] characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
 
 
-    public static List<String> getQueensList(int boardSze) {
-        enumerate(boardSze);
+
+    public static List<String> getQueensList() {
+        enumerate(8);
         return queensList;
     }
 
@@ -39,12 +39,7 @@ public class Queens {
     }
 
 
-    /***************************************************************************
-     * Prints n-by-n placement of queens from permutation q in ASCII.
-     ***************************************************************************/
     public static void printQueens(int[] q) {
-        String[] characters = new String [8];
-        characters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"};
 
         String item,actual = "";
 
@@ -52,15 +47,12 @@ public class Queens {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (q[i] == j){
-                    
+
                     item = characters[j] + ++j + " ";
                     actual = actual + item;
                 }
-
             }
-
         }
-
         queensList.add(actual);
     }
 
