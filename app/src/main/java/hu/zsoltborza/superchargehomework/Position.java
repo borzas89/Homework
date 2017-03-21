@@ -6,7 +6,6 @@ package hu.zsoltborza.superchargehomework;
 
 public class Position {
 
-
     private int column;
     private int row;
 

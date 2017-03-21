@@ -53,14 +53,6 @@ public class ChessRecyclerAdapter extends RecyclerView.Adapter<ChessRecyclerAdap
         String queenItem = mQueensList.get(position);
 
         holder.tvData.setText(queenItem);
-      /*  holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mQueensList.get(position);
-
-               Toast.makeText(mContext, holder.getAdapterPosition() + " clicked", Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
     }
 

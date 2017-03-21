@@ -7,7 +7,8 @@ import android.widget.GridLayout;
 
 /**
  * Created by Borzas on 2017. 03. 13.
- * Custom view class for displaying Queens for GridLayout.
+ *
+ * Custom view class for displaying squares for chessboard.
  */
 
 public class ChessView extends View {
@@ -31,13 +32,10 @@ public class ChessView extends View {
 
         setBackground(mChessQueen);
 
-       // mTablePiece = context.getDrawable(R.drawable.question);
-      //  setBackground(mTablePiece);
-
         GridLayout.LayoutParams tempParams = new GridLayout.LayoutParams(GridLayout.spec(row),GridLayout.spec(column));
 
-        tempParams.width = (int) getResources().getDisplayMetrics().density*40;
-        tempParams.height = (int) getResources().getDisplayMetrics().density*40;
+        tempParams.width = (int) getResources().getDisplayMetrics().density*42;
+        tempParams.height = (int) getResources().getDisplayMetrics().density*42;
 
         setLayoutParams(tempParams);
     }

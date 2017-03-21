@@ -6,11 +6,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +19,6 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
     ChessRecyclerAdapter mAdapter;
     List<String> mQueensList = new ArrayList<>();
 
-    int columnCount;
-    int rowCount;
-
-    int numberOfElements;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +28,6 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
         recyclerView = (RecyclerView) findViewById(R.id.chess_recycler_view);
         mGridChess = (GridLayout) findViewById(R.id.gridlayut_chess);
 
-        columnCount = mGridChess.getColumnCount();
-        rowCount = mGridChess.getRowCount();
-
-        numberOfElements = columnCount * rowCount;
-
-        ChessView[] chessViews = new ChessView[numberOfElements];
-
         drawChessBoard();
 
         setupRecyclerView();
@@ -50,10 +35,11 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
 
     }
 
-
     public void drawChessBoard() {
-
         // attaching to gridview - drawing a chessboard
+
+        int columnCount = mGridChess.getColumnCount();
+        int rowCount = mGridChess.getRowCount();
 
         int c;
         int r;
@@ -63,13 +49,9 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
 
                 if ((r + c) % 2 == 0) {
                     ChessView blackSquares = new ChessView(this, r, c, R.drawable.black);
-                    blackSquares.setId(View.generateViewId());
                     mGridChess.addView(blackSquares);
-
-
                 } else {
                     ChessView whiteSquares = new ChessView(this, r, c, R.drawable.white);
-                    whiteSquares.setId(View.generateViewId());
                     mGridChess.addView(whiteSquares);
                 }
 
@@ -78,44 +60,6 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
         }
 
     }
-
-    public List<Position> positionsCounter(String item) {
-
-
-
-        List<Position> positionList = new ArrayList<>();
-
-        char[] alphabet = "ABCDEFGH".toCharArray();
-
-        for (int i = 0; i < item.length(); i++) {
-
-            if (i % 3 == 0) {
-
-                for (int j = 0; j < alphabet.length; j++) {
-                    if (item.charAt(i) == alphabet[j]) {
-
-                        int col = ++j;
-                        int row = Integer.parseInt(String.valueOf(item.charAt(i + 1)));
-                        System.out.print("column is: " + ++j);
-                        // numbers - column count
-                        System.out.print(" row is: " + row);
-
-                        System.out.println();
-                        Position position = new Position(col,row);
-
-                        System.out.println("POS" + position.getColumn() + "kk"+ position.getRow());
-                        positionList.add(position);
-
-
-                    }
-                }
-            }
-
-        }
-
-        return positionList;
-    }
-
 
     public void setupRecyclerView() {
 
@@ -127,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
         recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mQueensList = Queens.getQueensList();
-
+        mQueensList = EightQueen.getQueensStringList();
         mAdapter = new ChessRecyclerAdapter(MainActivity.this, this, mQueensList);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
@@ -139,15 +82,31 @@ public class MainActivity extends AppCompatActivity implements ChessRecyclerAdap
     @Override
     public void recyclerViewListClicked(View view, int position) {
 
-
         // to clear chessboard
         drawChessBoard();
 
+        List<Position> eightList = EightQueen.getQueensPositionList();
 
-        Position pos = positionsCounter(mQueensList.get(position)).get(0);
+        Position pos;
 
-        ChessView blackSquares = new ChessView(this, pos.getRow(), pos.getColumn(), R.mipmap.ic_launcher);
-        mGridChess.addView(blackSquares);
+        // full list is contains 736 position so we need to multiple the position by 8
+        int startPosition = position * 8;
+        int endPosition = startPosition + 8;
+
+        for (int i = startPosition; i < endPosition; ++i) {
+            pos = eightList.get(i);
+
+            // black board, white figures....
+            if ((pos.getRow() + pos.getColumn()) % 2 == 0) {
+                ChessView queenSquares = new ChessView(this, pos.getRow(), pos.getColumn(), R.drawable.queen_white);
+                mGridChess.addView(queenSquares);
+            } else {
+                // white board black figures...
+                ChessView queenSquares = new ChessView(this, pos.getRow(), pos.getColumn(), R.drawable.queen_black);
+                mGridChess.addView(queenSquares);
+            }
+
+        }
 
 
     }
